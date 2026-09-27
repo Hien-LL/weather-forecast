@@ -77,7 +77,6 @@ Open-Meteo current fields include precipitation, rain and showers; hourly includ
 ## Development
 
 ```powershell
-cd D:\bot\weather-forecast
 npm run dev
 ```
 
