@@ -83,11 +83,11 @@ export default function WeatherGlobe({
       window.clearTimeout(timeout);
       instance.setProjection("globe");
       instance.setFog({
-        color: "rgb(186,210,235)",
-        "high-color": "rgb(36,75,150)",
-        "horizon-blend": 0.025,
-        "space-color": "rgb(4,7,18)",
-        "star-intensity": 0.5,
+        color: "rgb(60,78,94)",
+        "high-color": "rgb(32,46,61)",
+        "horizon-blend": 0.014,
+        "space-color": "rgb(13,22,32)",
+        "star-intensity": 0.12,
       });
       setMap(instance);
       setReady(true);

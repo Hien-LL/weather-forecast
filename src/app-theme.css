@@ -1,0 +1,100 @@
+/* Application chrome only. Cinematic WeatherPanel styles remain independent. */
+:root {
+  --bg-deep: #0b1119;
+  --surface: #111b26;
+  --surface-glass: rgba(18, 29, 41, .68);
+  --text-primary: rgba(255, 255, 255, .96);
+  --text-secondary: rgba(255, 255, 255, .68);
+  --text-muted: rgba(255, 255, 255, .45);
+  --accent: #8fcfea;
+  --border-subtle: rgba(255, 255, 255, .06);
+  --panel-radius: 28px;
+  --popup-surface: rgba(15, 26, 38, .72);
+  font-family: 'Manrope Variable', Manrope, ui-sans-serif, system-ui, sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-deep);
+}
+body {
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at 75% 20%, rgba(91,119,145,.12), transparent 34%),
+    radial-gradient(circle at 20% 75%, rgba(48,82,110,.10), transparent 40%),
+    linear-gradient(135deg, var(--bg-deep) 0%, #0d1620 50%, var(--surface) 100%);
+  background-attachment: fixed;
+}
+.app-shell { background: transparent; }
+.header { background: transparent; border-bottom-color: rgba(255,255,255,.04); }
+.brand { font-weight: 500; color: var(--text-primary); }
+.brand-accent { color: var(--text-primary); }
+.brand-icon { color: var(--accent); background: rgba(143,207,234,.04); border-color: var(--border-subtle); }
+.brand small { color: var(--text-muted); letter-spacing: 2px; }
+.header-actions { color: var(--text-secondary); }
+.my-location { color: var(--accent); font-weight: 400; }
+.header button:hover:not(:disabled) { background: rgba(29,44,58,.86); }
+.header button:focus-visible, .header a:focus-visible {
+  outline: 2px solid rgba(143,207,234,.65); outline-offset: 3px;
+}
+.search {
+  color: var(--text-secondary); background: var(--surface-glass);
+  border-color: var(--border-subtle); backdrop-filter: blur(16px);
+  transition: border-color .2s, background .2s;
+}
+.search:focus-within { border-color: rgba(143,207,234,.4); background: rgba(24,38,52,.78); }
+.search input { color: var(--text-primary); font-weight: 400; }
+.search input::placeholder { color: var(--text-muted); }
+.search input:focus-visible { outline: 1px solid rgba(143,207,234,.5); outline-offset: 4px; border-radius: 3px; }
+.search-results {
+  background: rgba(18,29,41,.94); border-color: var(--border-subtle);
+  backdrop-filter: blur(16px); box-shadow: 0 12px 32px rgba(0,0,0,.16);
+}
+.search-results button { color: var(--text-primary); }
+.search-results button svg { color: var(--accent); }
+.search-results small, .search-results p { color: var(--text-secondary); }
+.globe-section {
+  background: #0d1620; border-radius: var(--panel-radius);
+  border: 1px solid rgba(255,255,255,.05); box-shadow: 0 24px 80px rgba(0,0,0,.20);
+  overflow: hidden;
+}
+/* Grade the rendered map only: controls, popups and attribution retain full contrast.
+   This changes no Mapbox layers and adds no overlay that could intercept gestures. */
+.globe-section .mapboxgl-canvas { filter: saturate(.84) brightness(.97) contrast(.97); }
+.globe-heading h1 { color: rgba(246,250,253,.9); font-weight: 400; letter-spacing: -1.5px; }
+.globe-heading h1 span { color: rgba(174,193,210,.65); }
+.globe-heading .eyebrow { color: var(--text-muted); font-weight: 400; letter-spacing: 1.8px; }
+.globe-heading .status-dot { background: var(--accent); box-shadow: none; opacity: .7; }
+.globe-controls.glass {
+  background: rgba(17,28,40,.72); border: 1px solid rgba(255,255,255,.07);
+  backdrop-filter: blur(16px); box-shadow: 0 6px 20px rgba(0,0,0,.12); color: var(--text-secondary);
+}
+.globe-controls button:hover:not(:disabled) { background: rgba(29,44,58,.86); color: var(--text-primary); }
+.globe-controls button:active { color: var(--accent); }
+.globe-controls button:focus-visible { outline: 2px solid rgba(143,207,234,.65); outline-offset: -2px; color: var(--accent); }
+.globe-controls svg { stroke-width: 1.4; }
+.globe-hint.glass {
+  background: var(--surface-glass); border-color: var(--border-subtle);
+  backdrop-filter: blur(16px); box-shadow: none; color: var(--text-secondary);
+}
+.globe-section .coordinates { color: var(--text-secondary); }
+.globe-section .coordinates span { color: var(--text-muted); }
+.globe-marker {
+  background: var(--accent); border: 2px solid rgba(246,250,253,.9);
+  box-shadow: 0 0 0 5px rgba(143,207,234,.12);
+}
+.globe-marker::after { border-color: rgba(143,207,234,.32); }
+.globe-section .mapboxgl-popup { font-family: inherit; }
+.globe-section .mapboxgl-popup-content {
+  background: var(--popup-surface); backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,.08); border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12); color: var(--text-primary);
+}
+.globe-section .mapboxgl-popup-content strong { font-weight: 500; }
+.globe-section .mapboxgl-popup-content p { color: var(--text-secondary); }
+.globe-section :is(.mapboxgl-popup-anchor-bottom,.mapboxgl-popup-anchor-bottom-left,.mapboxgl-popup-anchor-bottom-right) .mapboxgl-popup-tip { border-top-color: var(--popup-surface); }
+.globe-section :is(.mapboxgl-popup-anchor-top,.mapboxgl-popup-anchor-top-left,.mapboxgl-popup-anchor-top-right) .mapboxgl-popup-tip { border-bottom-color: var(--popup-surface); }
+.globe-section .mapboxgl-popup-anchor-left .mapboxgl-popup-tip { border-right-color: var(--popup-surface); }
+.globe-section .mapboxgl-popup-anchor-right .mapboxgl-popup-tip { border-left-color: var(--popup-surface); }
+.globe-section .map-fallback { background: radial-gradient(ellipse,rgba(91,119,145,.10),transparent 70%); color: var(--text-secondary); }
+.globe-section .map-fallback h2 { color: var(--text-primary); font-weight: 500; }
+.globe-section .map-fallback p, .globe-section .map-fallback small, .map-loading { color: var(--text-secondary); }
+.app-footer { color: var(--text-muted); border-top-color: rgba(255,255,255,.04); }
+.app-footer a { color: var(--text-secondary); }

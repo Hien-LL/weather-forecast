@@ -15,7 +15,7 @@ export default function Header({
           <Globe2 />
         </span>
         <span>
-          Weather<span className="text-sky-300">Forecast</span>
+          Weather<span className="brand-accent">Forecast</span>
           <small>YOUR WORLD. AT A GLANCE.</small>
         </span>
       </a>
