@@ -1,16 +1,7 @@
 @import "tailwindcss";
 :root {
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    sans-serif;
-  color: #e8eef8;
-  background: #080d19;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  color-scheme: dark;
 }
 * {
   box-sizing: border-box;
@@ -47,7 +38,7 @@ button:focus-visible,
 input:focus-visible,
 a:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid #7dd3fc;
+  outline: 2px solid var(--accent);
   outline-offset: 4px;
 }
 a {
@@ -64,14 +55,12 @@ p {
   max-width: 1920px;
   margin: auto;
   padding: 0 36px;
-  background: radial-gradient(ellipse at 20% 50%, #15213f55, transparent 60%);
 }
 .header {
   height: 100px;
   display: flex;
   align-items: center;
   gap: 32px;
-  border-bottom: 1px solid #ffffff0c;
 }
 .brand {
   display: flex;
@@ -84,9 +73,6 @@ p {
 .brand-icon {
   display: grid;
   place-items: center;
-  color: #83d8fb;
-  background: #7dd3fc0d;
-  border: 1px solid #7dd3fc25;
   width: 42px;
   height: 42px;
   border-radius: 14px;
@@ -96,7 +82,6 @@ p {
   font-size: 8px;
   letter-spacing: 2.6px;
   font-weight: 400;
-  color: #7b8ba6;
   margin-top: 5px;
 }
 .search {
@@ -104,22 +89,16 @@ p {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #ffffff04;
-  border: 1px solid #ffffff12;
   border-radius: 12px;
   padding: 12px 16px;
   max-width: 420px;
   width: 100%;
   margin-left: auto;
-  color: #8494ac;
   z-index: 10;
 }
 .search input {
   width: 100%;
   min-width: 0;
-  background: none;
-  border: 0;
-  color: #e8eef8;
   font-size: 13px;
 }
 .search-results {
@@ -127,11 +106,8 @@ p {
   top: calc(100% + 8px);
   left: 0;
   right: 0;
-  background: #111b2d;
-  border: 1px solid #ffffff18;
   border-radius: 14px;
   padding: 12px;
-  box-shadow: 0 20px 50px #0008;
   max-height: 350px;
   overflow-y: auto;
 }
@@ -148,11 +124,9 @@ p {
   text-align: left;
   padding: 10px;
   border-radius: 8px;
-  color: #e8eef8;
 }
 .search-results small {
   display: block;
-  color: #8092aa;
   font-size: 10px;
 }
 .search-results p {
@@ -174,10 +148,7 @@ p {
   align-items: start;
 }
 .glass {
-  border: 1px solid #ffffff12;
-  background: linear-gradient(145deg, #1b293455, #111b2acc);
   backdrop-filter: blur(18px);
-  box-shadow: 0 16px 60px #0002;
 }
 .globe-section {
   position: sticky;
@@ -186,7 +157,6 @@ p {
   min-height: 610px;
   border-radius: 24px;
   overflow: hidden;
-  background: #080d19;
 }
 .map-container {
   width: 100%;
@@ -204,7 +174,6 @@ p {
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 2.3px;
-  color: #98acc0;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -212,9 +181,7 @@ p {
 .status-dot {
   width: 5px;
   height: 5px;
-  background: #79dbc1;
   border-radius: 100%;
-  box-shadow: 0 0 12px #79dbc1;
 }
 .globe-heading h1 {
   font-size: clamp(26px, 3vw, 46px);
@@ -223,12 +190,8 @@ p {
   line-height: 1.22;
   margin-top: 22px;
 }
-.globe-heading h1 span {
-  color: #7e92af;
-}
 .globe-heading p {
   font-size: 12px;
-  color: #8493ac;
   margin-top: 16px;
 }
 .map-fallback {
@@ -239,18 +202,14 @@ p {
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #6baed0;
   gap: 16px;
-  background: radial-gradient(ellipse, #24436640, transparent 70%);
 }
 .map-fallback h2 {
   font-size: 16px;
-  color: #d3e3ef;
 }
 .map-fallback p,
 .map-fallback small {
   font-size: 12px;
-  color: #91a3bc;
 }
 .globe-controls {
   position: absolute;
@@ -277,12 +236,10 @@ p {
   border-radius: 30px;
   padding: 12px 18px;
   font-size: 10px;
-  color: #a3b3c9;
   pointer-events: none;
 }
 .globe-hint b {
   margin: 0 8px;
-  color: #50627a;
 }
 .coordinates {
   position: absolute;
@@ -293,21 +250,12 @@ p {
   justify-content: space-between;
   font-size: 9px;
   letter-spacing: 1.5px;
-  color: #75869f;
   pointer-events: none;
-}
-.coordinates span {
-  color: #51627c;
 }
 .globe-marker {
   width: 17px;
   height: 17px;
-  border: 3px solid white;
-  background: #53c6fa;
   border-radius: 100%;
-  box-shadow:
-    0 0 0 7px #68caff30,
-    0 0 28px #68caff;
 }
 .weather-panel {
   min-width: 0;
@@ -530,10 +478,8 @@ p {
   justify-content: center;
   gap: 20px;
   text-align: center;
-  color: #9db1c7;
 }
 .state-card h2 {
-  color: #dfebf6;
   font-size: 22px;
   letter-spacing: -0.5px;
 }
@@ -572,40 +518,33 @@ p {
   display: flex;
   gap: 8px;
   align-items: center;
-  border: 1px solid #7dd3fc30;
   border-radius: 20px;
   padding: 10px 16px;
   font-size: 12px;
-  color: #b2e4fa;
 }
 .loading-orbit {
   width: 40px;
   height: 40px;
-  border: 2px solid #7dd3fc;
   border-radius: 100%;
-  box-shadow: 0 0 30px #7dd3fc30;
 }
 .skeleton {
   width: 100%;
   height: 60px;
   border-radius: 12px;
-  background: linear-gradient(100deg, #ffffff03, #ffffff08, #ffffff03);
 }
 .app-footer {
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  border-top: 1px solid #ffffff08;
   padding: 18px 0 24px;
   font-size: 8px;
   letter-spacing: 1.5px;
-  color: #5f738e;
 }
 .mapboxgl-ctrl-attrib {
   font-size: 9px !important;
 }
 .mapboxgl-canvas:focus-visible {
-  outline: 2px solid #7dd3fc;
+  outline: 2px solid var(--accent);
   outline-offset: -3px;
 }
 @media (min-width: 1500px) {
@@ -751,7 +690,6 @@ p {
     scroll-behavior: auto !important;
   }
 }
-
 /* Satellite-first startup and location journey. */
 .dashboard {
   position: relative;
@@ -778,7 +716,6 @@ p {
   inset: 50% 0 auto;
   text-align: center;
   font-size: 13px;
-  color: #abc5dc;
   pointer-events: none;
 }
 .explore-caption {
@@ -787,7 +724,6 @@ p {
   left: 50%;
   transform: translateX(-50%);
   font-size: 12px;
-  color: #a6b9ce;
   text-align: center;
   pointer-events: none;
 }
@@ -797,7 +733,6 @@ p {
   gap: 7px;
   white-space: nowrap;
   font-size: 11px;
-  color: #b8ddec;
   min-height: 44px;
   padding: 8px;
   border-radius: 10px;
@@ -815,12 +750,10 @@ p {
 }
 .journey-status p {
   font-size: 13px;
-  color: #a9c6dc;
   overflow-wrap: anywhere;
 }
 .journey-status small {
   font-size: 11px;
-  color: #8a9db4;
   line-height: 1.7;
 }
 .onboarding-dialog {
@@ -828,16 +761,10 @@ p {
   inset: auto 4vw 12vh auto;
   margin: 0;
   padding: 0;
-  border: 0;
   border-radius: 22px;
-  background: transparent;
-  color: #e8eef8;
   width: min(340px, calc(100vw - 28px));
   max-height: calc(100svh - 32px);
   overflow: auto;
-}
-.onboarding-dialog::backdrop {
-  background: rgb(4 7 18 / 10%);
 }
 .onboarding-card {
   padding: 26px;
@@ -847,7 +774,6 @@ p {
   align-items: center;
   text-align: center;
   gap: 14px;
-  background: linear-gradient(145deg, #162839e8, #0d1625ed);
 }
 .onboarding-card .eyebrow {
   font-size: 8px;
@@ -860,13 +786,11 @@ p {
   letter-spacing: -0.6px;
 }
 .onboarding-card p {
-  color: #b1c0d3;
   font-size: 12px;
   line-height: 1.65;
 }
 .onboarding-card small {
   font-size: 10px;
-  color: #8d9eb6;
   line-height: 1.6;
 }
 .primary-button,
@@ -878,16 +802,7 @@ p {
   padding: 10px 14px;
 }
 .primary-button {
-  background: #8ad4eb;
-  color: #071723;
   font-weight: 650;
-}
-.primary-button:hover:not(:disabled) {
-  background: #a6e4f5;
-}
-.secondary-button {
-  border: 1px solid #aecfe526;
-  color: #c3d9e8;
 }
 .search-link {
   display: flex;
@@ -896,13 +811,11 @@ p {
   gap: 8px;
   font-size: 12px;
   min-height: 44px;
-  color: #a3cce1;
 }
 .globe-marker::after {
   content: "";
   position: absolute;
   inset: -8px;
-  border: 1px solid #8cd6ef80;
   border-radius: 50%;
   animation: marker-pulse 2.8s ease-out infinite;
   pointer-events: none;
@@ -918,9 +831,6 @@ p {
   }
 }
 .mapboxgl-popup-content {
-  background: #111e30e8;
-  color: #dbeaf5;
-  border: 1px solid #8ccbe52b;
   border-radius: 10px;
   padding: 12px 14px;
   font-size: 12px;
@@ -928,11 +838,7 @@ p {
 }
 .mapboxgl-popup-content p {
   font-size: 10px;
-  color: #9bb6ca;
   margin-top: 4px;
-}
-.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-  border-top-color: #111e30;
 }
 .rain-card {
   margin-top: 22px;
@@ -1079,7 +985,6 @@ p {
     animation: none;
   }
 }
-
 [data-phase="welcome"] .globe-hint,
 [data-phase="locating"] .globe-hint {
   visibility: hidden;

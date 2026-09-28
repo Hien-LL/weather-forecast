@@ -43,7 +43,7 @@ export default function LocationOnboarding({
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <LocateFixed size={30} className="text-sky-300" />
+        <LocateFixed size={30} className="onboarding-icon" />
         <span className="eyebrow">WELCOME TO WEATHERFORECAST</span>
         <h2 id="welcome-title">
           Discover weather anywhere

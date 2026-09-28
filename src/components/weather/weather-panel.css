@@ -1,9 +1,9 @@
 /* Scoped to the weather panel: globe, onboarding and application layout stay intact. */
 .weather-panel.weather-immersive {
-  --weather-primary: rgba(255, 255, 255, 0.96);
-  --weather-secondary: rgba(255, 255, 255, 0.68);
-  --weather-muted: rgba(255, 255, 255, 0.45);
-  --weather-accent: #8edfff;
+  --weather-primary: var(--text-on-dark);
+  --weather-secondary: var(--text-on-dark-secondary);
+  --weather-muted: var(--text-on-dark-muted);
+  --weather-accent: var(--accent);
   position: relative;
   isolation: isolate;
   display: grid;
@@ -12,13 +12,13 @@
   height: clamp(720px, calc(100svh - 156px), 1040px);
   min-height: 0;
   padding: 0;
-  border: 0;
-  border-radius: 28px;
+  border: 1px solid var(--border-on-dark);
+  border-radius: var(--panel-radius);
   overflow: hidden;
-  background: #172c3e;
+  background: var(--map-space);
   color: var(--weather-primary);
   font-family: "Manrope Variable", Manrope, sans-serif;
-  box-shadow: 0 24px 70px #0005;
+  box-shadow: var(--shadow-panel);
   font-weight: 400;
 }
 .weather-backdrop {
@@ -139,7 +139,7 @@
   min-height: 0;
   overflow: auto;
   padding: 26px 28px 22px;
-  background: rgba(5, 12, 24, 0.28);
+  background: var(--surface-dark-glass);
   backdrop-filter: blur(24px);
   border-top: 1px solid #ffffff1c;
   scrollbar-width: thin;
@@ -334,7 +334,7 @@
   padding: 28px;
   text-align: center;
   gap: 16px;
-  background: rgba(5, 12, 24, 0.3);
+  background: var(--surface-dark-glass);
   backdrop-filter: blur(8px);
 }
 .weather-immersive .panel-state p {
@@ -371,7 +371,7 @@
 @media (max-width: 600px) {
   .weather-panel.weather-immersive {
     height: 850px;
-    border-radius: 28px;
+    border-radius: var(--panel-radius);
   }
   .weather-hero {
     padding: 30px 20px 32px;

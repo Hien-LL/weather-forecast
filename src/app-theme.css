@@ -1,100 +1,482 @@
-/* Application chrome only. Cinematic WeatherPanel styles remain independent. */
+/* WeatherMist: shared colors; layout lives in index.css. */
 :root {
-  --bg-deep: #0b1119;
-  --surface: #111b26;
-  --surface-glass: rgba(18, 29, 41, .68);
-  --text-primary: rgba(255, 255, 255, .96);
-  --text-secondary: rgba(255, 255, 255, .68);
-  --text-muted: rgba(255, 255, 255, .45);
-  --accent: #8fcfea;
-  --border-subtle: rgba(255, 255, 255, .06);
-  --panel-radius: 28px;
-  --popup-surface: rgba(15, 26, 38, .72);
-  font-family: 'Manrope Variable', Manrope, ui-sans-serif, system-ui, sans-serif;
+  --bg-main: #e5edf2;
+  --bg-light: #edf3f6;
+  --bg-secondary: #dce6ec;
+  --bg-deep: #cedbe3;
+  --bg-tertiary: var(--bg-deep);
+  --surface-glass: rgba(246, 250, 252, 0.48);
+  --surface-glass-hover: rgba(246, 250, 252, 0.74);
+  --surface-glass-strong: rgba(246, 250, 252, 0.68);
+  --surface-dark-glass: rgba(40, 56, 72, 0.32);
+  --text-primary: #263746;
+  --text-secondary: #617586;
+  /* Darker than the reference muted shade to retain small-label contrast. */
+  --text-muted: #617586;
+  --text-on-dark: rgba(255, 255, 255, 0.96);
+  --text-on-dark-secondary: rgba(255, 255, 255, 0.72);
+  --text-on-dark-muted: rgba(255, 255, 255, 0.52);
+  --accent: #73bcd7;
+  --accent-hover: #62b0cf;
+  --accent-strong: #55a7c7;
+  --accent-soft: rgba(115, 188, 215, 0.1);
+  --border-soft: rgba(82, 106, 126, 0.12);
+  --border-light: rgba(255, 255, 255, 0.55);
+  --border-on-dark: rgba(255, 255, 255, 0.18);
+  --shadow-small: 0 10px 30px rgba(70, 92, 110, 0.08);
+  --shadow-soft: 0 20px 50px rgba(70, 92, 110, 0.1);
+  --shadow-panel: 0 24px 70px rgba(70, 92, 110, 0.14);
+  --shadow-weather: 0 28px 70px rgba(70, 92, 110, 0.17);
+  --panel-radius: 30px;
+  --control-radius: 16px;
+  --map-space: rgb(24, 34, 43);
+  --map-control: rgba(32, 46, 57, 0.72);
+  --popup-surface: rgba(35, 49, 61, 0.84);
+  --error: #c87878;
+  --error-surface: rgba(200, 120, 120, 0.1);
+  --error-border: rgba(200, 120, 120, 0.2);
+  --scroll-thumb: rgba(95, 119, 138, 0.28);
+  --focus-ring: rgba(85, 167, 199, 0.65);
+  font-family:
+    "Manrope Variable", Manrope, ui-sans-serif, system-ui, sans-serif;
   color: var(--text-primary);
-  background: var(--bg-deep);
+  color-scheme: light;
+  background: var(--bg-main);
+}
+body,
+#root {
+  min-height: 100svh;
 }
 body {
-  min-height: 100svh;
   background:
-    radial-gradient(circle at 75% 20%, rgba(91,119,145,.12), transparent 34%),
-    radial-gradient(circle at 20% 75%, rgba(48,82,110,.10), transparent 40%),
-    linear-gradient(135deg, var(--bg-deep) 0%, #0d1620 50%, var(--surface) 100%);
+    radial-gradient(
+      circle at 15% 18%,
+      rgba(237, 243, 246, 0.28),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 82% 14%,
+      rgba(144, 188, 211, 0.24),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 70% 85%,
+      rgba(172, 196, 209, 0.22),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      var(--bg-main) 0%,
+      var(--bg-secondary) 55%,
+      var(--bg-deep) 100%
+    );
   background-attachment: fixed;
 }
-.app-shell { background: transparent; }
-.header { background: transparent; border-bottom-color: rgba(255,255,255,.04); }
-.brand { font-weight: 500; color: var(--text-primary); }
-.brand-accent { color: var(--text-primary); }
-.brand-icon { color: var(--accent); background: rgba(143,207,234,.04); border-color: var(--border-subtle); }
-.brand small { color: var(--text-muted); letter-spacing: 2px; }
-.header-actions { color: var(--text-secondary); }
-.my-location { color: var(--accent); font-weight: 400; }
-.header button:hover:not(:disabled) { background: rgba(29,44,58,.86); }
-.header button:focus-visible, .header a:focus-visible {
-  outline: 2px solid rgba(143,207,234,.65); outline-offset: 3px;
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) transparent;
+}
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(95, 119, 138, 0.42);
+}
+.app-shell {
+  background: transparent;
+}
+.header {
+  background: rgba(229, 237, 242, 0.46);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border-soft);
+  position: relative;
+  z-index: 20;
+}
+.brand,
+.brand-accent {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+.brand-icon {
+  color: var(--accent-strong);
+  background: var(--surface-glass);
+  border: 1px solid var(--border-light);
+}
+.brand small {
+  color: var(--text-muted);
+  letter-spacing: 2px;
+}
+.header-actions,
+.icon-button {
+  color: var(--text-secondary);
+}
+.my-location {
+  color: var(--accent-strong);
+  font-weight: 500;
+}
+.icon-button,
+.my-location {
+  border-radius: var(--control-radius);
+}
+button:hover:not(:disabled) {
+  background: var(--surface-glass-hover);
+}
+button:focus-visible,
+input:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 .search {
-  color: var(--text-secondary); background: var(--surface-glass);
-  border-color: var(--border-subtle); backdrop-filter: blur(16px);
-  transition: border-color .2s, background .2s;
+  color: var(--text-secondary);
+  background: rgba(239, 246, 249, 0.52);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--control-radius);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-small);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
-.search:focus-within { border-color: rgba(143,207,234,.4); background: rgba(24,38,52,.78); }
-.search input { color: var(--text-primary); font-weight: 400; }
-.search input::placeholder { color: var(--text-muted); }
-.search input:focus-visible { outline: 1px solid rgba(143,207,234,.5); outline-offset: 4px; border-radius: 3px; }
+.search:focus-within {
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.search input {
+  color: var(--text-primary);
+  background: transparent;
+  border: 0;
+  font-weight: 400;
+}
+.search input::placeholder {
+  color: var(--text-muted);
+}
+/* The enclosing search surface supplies the visible keyboard focus ring. */
+.search input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
 .search-results {
-  background: rgba(18,29,41,.94); border-color: var(--border-subtle);
-  backdrop-filter: blur(16px); box-shadow: 0 12px 32px rgba(0,0,0,.16);
+  background: rgba(229, 237, 242, 0.94);
+  border: 1px solid var(--border-soft);
+  backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-soft);
 }
-.search-results button { color: var(--text-primary); }
-.search-results button svg { color: var(--accent); }
-.search-results small, .search-results p { color: var(--text-secondary); }
+.search-results button {
+  color: var(--text-primary);
+}
+.search-results button svg {
+  color: var(--accent-strong);
+}
+.search-results small,
+.search-results p {
+  color: var(--text-secondary);
+}
+.glass {
+  background: var(--surface-glass);
+  border: 1px solid var(--border-light);
+  -webkit-backdrop-filter: blur(18px);
+}
 .globe-section {
-  background: #0d1620; border-radius: var(--panel-radius);
-  border: 1px solid rgba(255,255,255,.05); box-shadow: 0 24px 80px rgba(0,0,0,.20);
+  background: var(--bg-tertiary);
+  border-radius: var(--panel-radius);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-panel);
+  color: var(--text-on-dark);
+  color-scheme: dark;
   overflow: hidden;
 }
-/* Grade the rendered map only: controls, popups and attribution retain full contrast.
-   This changes no Mapbox layers and adds no overlay that could intercept gestures. */
-.globe-section .mapboxgl-canvas { filter: saturate(.84) brightness(.97) contrast(.97); }
-.globe-heading h1 { color: rgba(246,250,253,.9); font-weight: 400; letter-spacing: -1.5px; }
-.globe-heading h1 span { color: rgba(174,193,210,.65); }
-.globe-heading .eyebrow { color: var(--text-muted); font-weight: 400; letter-spacing: 1.8px; }
-.globe-heading .status-dot { background: var(--accent); box-shadow: none; opacity: .7; }
-.globe-controls.glass {
-  background: rgba(17,28,40,.72); border: 1px solid rgba(255,255,255,.07);
-  backdrop-filter: blur(16px); box-shadow: 0 6px 20px rgba(0,0,0,.12); color: var(--text-secondary);
+.map-container {
+  background: var(--map-space);
 }
-.globe-controls button:hover:not(:disabled) { background: rgba(29,44,58,.86); color: var(--text-primary); }
-.globe-controls button:active { color: var(--accent); }
-.globe-controls button:focus-visible { outline: 2px solid rgba(143,207,234,.65); outline-offset: -2px; color: var(--accent); }
-.globe-controls svg { stroke-width: 1.4; }
+/* Grade canvas only, leaving controls and attribution crisp. */
+.globe-section .mapboxgl-canvas {
+  filter: saturate(0.84) brightness(0.97) contrast(0.97);
+}
+.globe-heading h1 {
+  color: rgba(247, 250, 252, 0.92);
+  font-weight: 400;
+  letter-spacing: -1.5px;
+}
+.globe-heading h1 span {
+  color: rgba(179, 197, 211, 0.68);
+}
+.globe-heading .eyebrow,
+.globe-heading p {
+  color: var(--text-on-dark-secondary);
+  font-weight: 400;
+}
+.status-dot {
+  background: var(--accent);
+  box-shadow: none;
+  opacity: 0.7;
+}
+.globe-controls.glass,
 .globe-hint.glass {
-  background: var(--surface-glass); border-color: var(--border-subtle);
-  backdrop-filter: blur(16px); box-shadow: none; color: var(--text-secondary);
+  background: var(--map-control);
+  border: 1px solid var(--border-on-dark);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: none;
+  color: var(--text-on-dark-secondary);
 }
-.globe-section .coordinates { color: var(--text-secondary); }
-.globe-section .coordinates span { color: var(--text-muted); }
+.globe-controls {
+  border-radius: var(--control-radius);
+}
+.globe-controls button:hover:not(:disabled) {
+  background: rgba(47, 63, 76, 0.84);
+  color: var(--text-on-dark);
+}
+.globe-controls button:active {
+  color: var(--accent);
+}
+.globe-controls button:focus-visible {
+  outline-offset: -2px;
+}
+.globe-controls svg {
+  stroke-width: 1.4;
+}
+.globe-hint b,
+.coordinates span {
+  color: var(--text-on-dark-muted);
+}
+.coordinates,
+.explore-caption,
+.map-loading {
+  color: var(--text-on-dark-secondary);
+}
 .globe-marker {
-  background: var(--accent); border: 2px solid rgba(246,250,253,.9);
-  box-shadow: 0 0 0 5px rgba(143,207,234,.12);
+  background: var(--accent);
+  border: 2px solid var(--text-on-dark);
+  box-shadow: 0 0 0 5px rgba(115, 188, 215, 0.3);
 }
-.globe-marker::after { border-color: rgba(143,207,234,.32); }
-.globe-section .mapboxgl-popup { font-family: inherit; }
+.globe-marker::after {
+  border: 1px solid rgba(115, 188, 215, 0.18);
+}
+.globe-section .mapboxgl-popup {
+  font-family: inherit;
+}
 .globe-section .mapboxgl-popup-content {
-  background: var(--popup-surface); backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,.08); border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.12); color: var(--text-primary);
+  background: var(--popup-surface);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border-on-dark);
+  border-radius: var(--control-radius);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  color: var(--text-on-dark);
 }
-.globe-section .mapboxgl-popup-content strong { font-weight: 500; }
-.globe-section .mapboxgl-popup-content p { color: var(--text-secondary); }
-.globe-section :is(.mapboxgl-popup-anchor-bottom,.mapboxgl-popup-anchor-bottom-left,.mapboxgl-popup-anchor-bottom-right) .mapboxgl-popup-tip { border-top-color: var(--popup-surface); }
-.globe-section :is(.mapboxgl-popup-anchor-top,.mapboxgl-popup-anchor-top-left,.mapboxgl-popup-anchor-top-right) .mapboxgl-popup-tip { border-bottom-color: var(--popup-surface); }
-.globe-section .mapboxgl-popup-anchor-left .mapboxgl-popup-tip { border-right-color: var(--popup-surface); }
-.globe-section .mapboxgl-popup-anchor-right .mapboxgl-popup-tip { border-left-color: var(--popup-surface); }
-.globe-section .map-fallback { background: radial-gradient(ellipse,rgba(91,119,145,.10),transparent 70%); color: var(--text-secondary); }
-.globe-section .map-fallback h2 { color: var(--text-primary); font-weight: 500; }
-.globe-section .map-fallback p, .globe-section .map-fallback small, .map-loading { color: var(--text-secondary); }
-.app-footer { color: var(--text-muted); border-top-color: rgba(255,255,255,.04); }
-.app-footer a { color: var(--text-secondary); }
+.globe-section .mapboxgl-popup-content strong {
+  font-weight: 500;
+}
+.globe-section .mapboxgl-popup-content p {
+  color: var(--text-on-dark-secondary);
+}
+.globe-section
+  :is(
+    .mapboxgl-popup-anchor-bottom,
+    .mapboxgl-popup-anchor-bottom-left,
+    .mapboxgl-popup-anchor-bottom-right
+  )
+  .mapboxgl-popup-tip {
+  border-top-color: var(--popup-surface);
+}
+.globe-section
+  :is(
+    .mapboxgl-popup-anchor-top,
+    .mapboxgl-popup-anchor-top-left,
+    .mapboxgl-popup-anchor-top-right
+  )
+  .mapboxgl-popup-tip {
+  border-bottom-color: var(--popup-surface);
+}
+.globe-section .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  border-right-color: var(--popup-surface);
+}
+.globe-section .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  border-left-color: var(--popup-surface);
+}
+.globe-section .map-fallback {
+  background: transparent;
+  color: var(--text-on-dark-secondary);
+}
+.globe-section .map-fallback h2 {
+  color: var(--text-on-dark);
+  font-weight: 500;
+}
+.globe-section .map-fallback p,
+.globe-section .map-fallback small {
+  color: var(--text-on-dark-secondary);
+}
+.onboarding-dialog {
+  background: transparent;
+  color: var(--text-primary);
+  border: 0;
+  box-shadow: var(--shadow-panel);
+}
+.onboarding-dialog::backdrop {
+  background: rgba(82, 105, 125, 0.06);
+}
+.onboarding-card {
+  background: rgba(238, 245, 248, 0.72);
+  border: 1px solid var(--border-light);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+}
+.onboarding-icon,
+.search-link svg {
+  color: var(--accent-strong);
+}
+.onboarding-card h2,
+.journey-status h2 {
+  color: var(--text-primary);
+}
+.onboarding-card p,
+.journey-status p,
+.search-link {
+  color: var(--text-secondary);
+}
+.onboarding-card small,
+.onboarding-card .eyebrow,
+.journey-status small {
+  color: var(--text-muted);
+}
+.primary-button,
+.secondary-button {
+  border-radius: var(--control-radius);
+}
+.primary-button {
+  background: linear-gradient(180deg, #95d2e5, #79c1d9);
+  color: #213b4a;
+  border: 1px solid var(--border-light);
+  box-shadow: 0 10px 26px rgba(85, 167, 199, 0.14);
+}
+.primary-button:hover:not(:disabled) {
+  background: linear-gradient(180deg, #8acbe1, var(--accent-hover));
+}
+.secondary-button {
+  background: var(--surface-glass);
+  border: 1px solid var(--border-soft);
+  color: var(--text-primary);
+}
+.search-link:hover:not(:disabled) {
+  color: var(--text-primary);
+  background: transparent;
+}
+.journey-status {
+  background: var(--surface-glass-strong);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
+}
+.state-card {
+  color: var(--text-secondary);
+}
+.state-card h2 {
+  color: var(--text-primary);
+}
+.state-card[role="alert"] {
+  background: var(--error-surface);
+  border: 1px solid var(--error-border);
+  border-radius: 20px;
+  padding: 20px;
+}
+.state-card[role="alert"] > svg {
+  color: var(--error);
+}
+.pill {
+  color: var(--text-primary);
+  background: var(--surface-glass);
+  border: 1px solid var(--border-soft);
+}
+.loading-orbit {
+  border: 2px solid var(--accent-strong);
+  box-shadow: none;
+}
+.skeleton {
+  background: linear-gradient(
+    100deg,
+    var(--surface-glass),
+    var(--surface-glass-strong),
+    var(--surface-glass)
+  );
+}
+.weather-immersive {
+  /* Preserve the photographic panel palette; only its outer shadow changes. */
+  --accent: #79bfd8;
+  --map-space: rgb(22, 31, 40);
+  --shadow-panel: var(--shadow-weather);
+  color-scheme: dark;
+  --scroll-thumb: rgba(255, 255, 255, 0.24);
+}
+.weather-immersive .state-card,
+.weather-immersive .state-card h2,
+.weather-immersive .pill {
+  color: var(--text-on-dark);
+}
+.weather-immersive .pill {
+  background: var(--surface-dark-glass);
+  border-color: var(--border-on-dark);
+}
+.weather-immersive ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.38);
+}
+.app-footer {
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-soft);
+}
+.app-footer a {
+  color: var(--text-secondary);
+}
+
+.primary-button:disabled {
+  opacity: 0.72;
+}
+
+.header button:hover:not(:disabled) {
+  background: rgba(246, 250, 252, 0.3);
+}
+.globe-heading .eyebrow {
+  color: rgba(220, 231, 238, 0.6);
+}
+.globe-controls.glass {
+  border-color: rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.84);
+}
+.globe-hint.glass {
+  background: rgba(34, 48, 60, 0.64);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+.globe-section .mapboxgl-popup-content {
+  border-color: rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.94);
+}
+.globe-section .mapboxgl-popup-content p {
+  color: rgba(255, 255, 255, 0.6);
+}
+.onboarding-dialog {
+  box-shadow: 0 24px 60px rgba(70, 92, 110, 0.12);
+}
+/* Small copy needs more contrast on glass over the dark satellite scene. */
+.onboarding-card {
+  --text-secondary: #465b6b;
+  --text-muted: #465b6b;
+}
+.secondary-button {
+  background: rgba(246, 250, 252, 0.34);
+}
+.secondary-button:hover:not(:disabled) {
+  background: rgba(246, 250, 252, 0.56);
+}
+.header,
+.app-footer {
+  border-color: rgba(82, 106, 126, 0.09);
+}
