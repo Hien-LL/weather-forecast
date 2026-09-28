@@ -45,6 +45,7 @@ export function parseWeather(payload: unknown): WeatherData {
   return {
     timezone: text(data.timezone),
     current: {
+      isDay: c.is_day === 1 ? true : c.is_day === 0 ? false : null,
       time: currentTime,
       temperature: number(c.temperature_2m),
       apparentTemperature: number(c.apparent_temperature),
@@ -92,7 +93,7 @@ export async function fetchWeather(
     wind_speed_unit: "kmh",
     precipitation_unit: "mm",
     current:
-      "temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,rain,showers,weather_code,cloud_cover,pressure_msl,wind_speed_10m",
+      "is_day,temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,rain,showers,weather_code,cloud_cover,pressure_msl,wind_speed_10m",
     hourly:
       "temperature_2m,precipitation_probability,precipitation,rain,showers,relative_humidity_2m,wind_speed_10m,weather_code",
     daily:

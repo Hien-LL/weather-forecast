@@ -83,6 +83,7 @@ describe("weather boundary", () => {
     expect(url.searchParams.get("wind_speed_unit")).toBe("kmh");
     expect(mock.mock.calls[0][1]).toEqual({ signal });
     expect(url.searchParams.get("current")).toContain("rain,showers");
+    expect(url.searchParams.get("current")).toContain("is_day");
     expect(url.searchParams.get("hourly")).toContain(
       "precipitation,rain,showers",
     );
@@ -131,5 +132,17 @@ describe("weather boundary", () => {
     });
     expect(parsed.current.rain).toBeNull();
     expect(parsed.hourly[0].rain).toBeNull();
+  });
+  it("uses the API daylight flag without guessing from browser time", () => {
+    const payload = fixture();
+    expect(
+      parseWeather({ ...payload, current: { ...payload.current, is_day: 1 } })
+        .current.isDay,
+    ).toBe(true);
+    expect(
+      parseWeather({ ...payload, current: { ...payload.current, is_day: 0 } })
+        .current.isDay,
+    ).toBe(false);
+    expect(parseWeather(payload).current.isDay).toBeNull();
   });
 });

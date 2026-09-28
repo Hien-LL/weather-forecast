@@ -98,29 +98,16 @@ export default function App() {
             onLocationSelect={onSelect}
             onCameraSettled={onSettled}
           />
-          {panelReady ? (
+          {selection && (
             <WeatherPanel
-              key={selection?.camera.id}
               location={location}
               weather={weather}
               loading={loading}
               error={error}
               retry={retry}
+              ready={panelReady}
             />
-          ) : selection ? (
-            <div className="journey-status glass" role="status">
-              <span className="status-dot" />
-              <h2>
-                {selection.settled
-                  ? "Reading the atmosphere..."
-                  : "Travelling to your forecast..."}
-              </h2>
-              <p>{location?.name}</p>
-              <small>
-                You can still move the globe or choose another location.
-              </small>
-            </div>
-          ) : null}
+          )}
         </main>
         {view === "welcome" && (
           <LocationOnboarding

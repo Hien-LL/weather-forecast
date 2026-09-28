@@ -12,13 +12,10 @@ export default function RainForecastCard({
   const when = (time: string) =>
     `${time.slice(0, 10) !== weather.current.time.slice(0, 10) ? "tomorrow " : ""}${hourLabel(time)}`;
   return (
-    <section
-      className={`rain-card ${rain.isRainingNow ? "rain-active" : ""}`}
-      aria-labelledby="rain-title"
-    >
+    <section className="rain-outlook-section" aria-labelledby="rain-title">
       <div className="rain-heading">
-        <Icon size={22} />
-        <span className="eyebrow">RAIN OUTLOOK</span>
+        <Icon size={20} strokeWidth={1.3} />
+        <span>Rain outlook</span>
       </div>
       <h3 id="rain-title">
         {rain.isRainingNow

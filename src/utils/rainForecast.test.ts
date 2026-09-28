@@ -7,6 +7,7 @@ function forecast(
   return {
     timezone: "Asia/Ho_Chi_Minh",
     current: {
+      isDay: true,
       time: "2026-09-27T18:15",
       temperature: 30,
       apparentTemperature: 31,

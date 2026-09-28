@@ -104,3 +104,13 @@ Real city search, weather layers, radar, wind visualization, favorite locations,
 - [Open-Meteo fields and WMO codes](https://open-meteo.com/en/docs)
 
 Mapbox attribution remains visible on the map; Open-Meteo is linked in the panel and app footer.
+
+## Cinematic weather panel
+
+The right panel now uses one continuous local weather photograph, a 44% hero, Manrope variable typography, a dark readability overlay and a lower section with 24px backdrop blur. The lower region scrolls independently (keyboard focusable) so every metric, the full rain summary, hourly/day forecasts, chart and attribution remain available. Today's high and low temperatures are also shown as rows.
+
+`src/utils/weatherBackground.ts` reuses the WMO presentation utility to select clear day, clear night, cloudy/partly cloudy, rain, thunderstorm, snow or fog. Clear day/night uses Open-Meteo's current `is_day`, the only added API field; unknown daylight uses the neutral cloudy background. The existing request/hook architecture and rain calculations are unchanged. Local images are under `src/assets/weather/`; each condition has its own gradient if a file is missing or fails to load. Backgrounds preload and crossfade; the previous background is retained while the next location is loading, without showing old weather as the new location's data.
+
+These are decorative AI-generated photographic landscapes, not photographs of the selected city. The built-in imagegen prompt set and asset notes are saved alongside the images. Font files are self-hosted with `@fontsource-variable/manrope` ([Fontsource](https://fontsource.org/fonts/manrope/use)); no external font request is required.
+
+Modified presentation files: `App.tsx` (keep the panel mounted for transitions), `WeatherPanel.tsx`, `CurrentWeather.tsx`, `WeatherDetails.tsx`, `RainForecastCard.tsx`, `HourlyForecast.tsx`, `DailyForecast.tsx`. Added `WeatherBackground.tsx`, `weather-panel.css`, `weatherBackground.ts` and mapping tests. Data additions: `CurrentWeather.isDay` and parsing/requesting `is_day` in `weatherApi.ts`; relevant test fixtures updated. `useWeather`, `rainForecast.ts` and the globe components are preserved.

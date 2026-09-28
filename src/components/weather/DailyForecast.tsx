@@ -12,7 +12,7 @@ export default function DailyForecast({ days }: { days: DailyWeather[] }) {
             <time dateTime={day.date}>
               {index === 0 ? "Today" : dayLabel(day.date)}
             </time>
-            <Icon size={20} />
+            <Icon strokeWidth={1.3} size={20} />
             <span className="day-description">{label}</span>
             <small>{value(day.precipitationProbability, "%")}</small>
             <strong>

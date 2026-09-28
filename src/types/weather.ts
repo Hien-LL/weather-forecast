@@ -7,6 +7,7 @@ export interface LocationData extends Coordinates {
   country?: string;
 }
 export interface CurrentWeather {
+  isDay: boolean | null;
   time: string;
   temperature: number | null;
   apparentTemperature: number | null;

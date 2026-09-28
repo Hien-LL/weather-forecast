@@ -24,7 +24,7 @@ export default function HourlyForecast({ hours }: { hours: HourlyWeather[] }) {
               transition={{ delay: Math.min(index, 5) * 0.04 }}
             >
               <time dateTime={hour.time}>{hourLabel(hour.time)}</time>
-              <Icon size={23} aria-label={label} />
+              <Icon strokeWidth={1.3} size={23} aria-label={label} />
               <strong>{value(hour.temperature, "°")}</strong>
               <small>{value(hour.precipitationProbability, "%")}</small>
             </motion.div>
