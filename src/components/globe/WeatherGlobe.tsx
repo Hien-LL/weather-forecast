@@ -155,7 +155,10 @@ export default function WeatherGlobe({
           <Globe2 size={70} strokeWidth={0.7} />
           <h2>{error}</h2>
           <p>Add a public Mapbox token to .env.local and restart Vite.</p>
-          <small>Location and city search still work without a map.</small>
+          <small>
+            GPS weather remains available. City search needs a valid Mapbox
+            token.
+          </small>
         </div>
       ) : (
         !ready && (
@@ -167,8 +170,12 @@ export default function WeatherGlobe({
       {map && (
         <>
           <GlobeControls map={map} onInteract={interrupt} />
-          {selected && cameraRequest?.id === arrivedId && (
-            <GlobeMarker map={map} location={selected} />
+          {selected && (
+            <GlobeMarker
+              map={map}
+              location={selected}
+              visible={cameraRequest?.id === arrivedId}
+            />
           )}
         </>
       )}

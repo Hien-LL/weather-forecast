@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { reverseGeocode } from "../services/geocodingApi";
 import type { LocationData } from "../types/weather";
-export function useLocationInfo(location: LocationData | null) {
+export function useLocationInfo(location: LocationData | null, resolve = true) {
   const [resolved, setResolved] = useState<{
     source: LocationData;
     location: LocationData;
   } | null>(null);
   useEffect(() => {
-    if (!location) return;
+    if (!location || !resolve) return;
     const controller = new AbortController();
     void reverseGeocode(location, controller.signal).then((info) => {
       if (!controller.signal.aborted)
@@ -24,6 +24,8 @@ export function useLocationInfo(location: LocationData | null) {
         });
     });
     return () => controller.abort();
-  }, [location]);
-  return resolved?.source === location ? resolved.location : location;
+  }, [location, resolve]);
+  return resolve && resolved?.source === location
+    ? resolved.location
+    : location;
 }

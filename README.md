@@ -7,9 +7,9 @@ Satellite Earth explorer with opt-in location, cinematic camera movement and an 
 - Startup: Standard Satellite imagery rendered directly by Mapbox GL JS 3.31, globe projection, zoom 1.4, zero pitch/bearing, atmosphere and space background. The whole globe area is available before selecting a location. Auto-rotation is 0.5 degrees/second and stops permanently on a user gesture or camera request. Reduced-motion users get no auto-rotation and immediate camera positioning.
 - **Use My Location**: only this button (or the later My Location button) invokes the browser geolocation API. Options: high accuracy, 10-second timeout, cached positions up to five minutes. Location accuracy depends on the device/browser.
 - GPS states: idle, requesting, success, denied, unavailable, timeout, unsupported. Errors stay in the accessible native-dialog onboarding with retry, Explore Manually and Search city actions. Escape explores manually. Late GPS results are ignored after cancellation or another selection.
-- GPS/search: coordinates immediately start the existing weather hook and independent reverse geocoding. Camera first pulls back if necessary, rotates to the destination at globe scale, then flies to zoom 9. GPS rotate/zoom durations are 1.6/3 seconds; sample-city search uses 0.9/2 seconds. Mapbox moveend events chain the stages, not arbitrary timers.
+- GPS/search: coordinates immediately start the existing weather hook. GPS uses reverse geocoding; search uses its known metadata. Camera first pulls back if necessary, rotates to the destination at globe scale, then flies to zoom 9. GPS rotate/zoom durations are 1.6/3 seconds; city search uses 0.9/2 seconds. Mapbox moveend events chain the stages, not arbitrary timers.
 - Marker appears after the camera sequence. The weather panel fades/slides in once the sequence settles and data or an error is available. User camera interaction interrupts the cinematic and releases the waiting UI; the selected location remains selected. A missing/failed map cannot block weather.
-- Manual exploration: no GPS prompt. Clicking Earth reverse geocodes coordinates, uses a short 650 ms camera adjustment and loads weather. Sample city search remains explicitly labeled.
+- Manual exploration: no GPS prompt. Clicking Earth reverse geocodes coordinates, uses a short 650 ms camera adjustment and loads weather. Real city search works without GPS permission.
 - Marker has a subtle pulse and a safe text-only location popup. Reverse-geocoding results can update its label without replaying the flight.
 - Current conditions, 24 hourly entries, seven daily forecasts and a responsive temperature chart. Settings/theme remain UI placeholders.
 
@@ -26,7 +26,7 @@ React, React DOM, TypeScript strict, Vite, Tailwind CSS, Mapbox GL JS, Framer Mo
 - `src/components/globe`: Mapbox lifecycle, globe controls and marker popup.
 - `src/components/onboarding/LocationOnboarding.tsx`: keyboard-accessible permission onboarding.
 - `src/components/weather`: current/hourly/daily presentation and RainForecastCard.
-- `src/components/charts`, `search`, `common`: chart, sample search, header and status UI.
+- `src/components/charts`, `search`, `common`: chart, real location search, header and status UI.
 - `src/hooks/useGlobeCamera.ts`: event-driven camera sequencing and cancellation.
 - `src/hooks/useGeolocation.ts`: explicit requests, status and stale-result protection.
 - `src/hooks/useLocationInfo.ts`: independent reverse-geocoding lifecycle.
@@ -56,9 +56,17 @@ Edit `.env.local` and replace the placeholder:
 VITE_MAPBOX_ACCESS_TOKEN=pk.your_actual_public_mapbox_token
 ```
 
-A public browser token must be able to access Mapbox styles/tiles and Geocoding v6 for the account. Enable/configure the relevant Mapbox services and billing as required by your account; requests count toward Mapbox usage. If the token has URL restrictions, allow your localhost and deployed origins. Never use a secret token in a VITE_ variable. Restart Vite after edits. Missing/invalid-token UI keeps GPS, sample city search and weather usable; reverse geocoding falls back to coordinates.
+A public browser token must be able to access Mapbox styles/tiles and Geocoding v6 for the account. Enable/configure the relevant Mapbox services and billing as required by your account; requests count toward Mapbox usage. If the token has URL restrictions, allow your localhost and deployed origins. Never use a secret token in a VITE_ variable. Restart Vite after edits. Missing/invalid-token UI keeps GPS and weather usable; city search shows a token message; reverse geocoding falls back to coordinates.
 
 Geolocation requires HTTPS or localhost and browser permission. Do not open index.html as a local file. The app does not persist location or send it to a private backend. Coordinates go directly to Mapbox for reverse geocoding and Open-Meteo for weather. No geolocation or weather request occurs on initial mount.
+
+## Location search
+
+The existing search adapter (`src/services/locationSearch.ts`) uses Mapbox Geocoding v6 `GET /search/geocode/v6/forward`, with the same public token, `types=place,locality,district,region,country`, `limit=6`, English result labels and no proximity/country restriction. Unicode queries are safely encoded with URLSearchParams. No sample-city data remains.
+
+`useLocationSearch` waits 300 ms after typing at least two characters, cancels old requests/timers, ignores stale responses and applies a 10-second HTTP timeout. Results are validated and normalized into domain objects, deduplicated by ID, and kept only in component memory. There is no persistent search cache.
+
+The combobox supports arrows/Enter, Escape, outside click, clear, loading, empty, error and retry states. Onboarding Search city focuses this same input. Selection reuses App's selected-location/camera state and `useWeather`; it does not fetch weather in the search component or reverse-geocode known search metadata. The existing map and marker are reused. Missing/invalid tokens produce a friendly search message without clearing current weather.
 
 ## Reverse geocoding
 
@@ -95,7 +103,7 @@ Production output is `dist/`. Unit tests cover rain logic (including midnight, n
 
 ## Future features
 
-Real city search, weather layers, radar, wind visualization, favorite locations, historical weather and separately implemented machine-learning forecasts.
+Weather layers, radar, wind visualization, favorite locations, historical weather and separately implemented machine-learning forecasts.
 
 ## References and attribution
 

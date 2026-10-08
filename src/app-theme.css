@@ -480,3 +480,87 @@ a:focus-visible,
 .app-footer {
   border-color: rgba(82, 106, 126, 0.09);
 }
+
+/* Real location combobox; inherits WeatherMist colors and header stacking. */
+.search > svg {
+  flex-shrink: 0;
+}
+.search .search-clear {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  min-width: 28px;
+  min-height: 28px;
+  border-radius: 8px;
+  color: var(--text-secondary);
+}
+.search .search-results {
+  /* Higher opacity prevents satellite labels bleeding through nested glass. */
+  background: rgba(242, 248, 251, 0.96);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(70, 92, 110, 0.14);
+  max-height: min(380px, 50svh);
+}
+.search-results ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.search-results [role="option"] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+.search-results [role="option"] > svg {
+  color: var(--accent-strong);
+  flex-shrink: 0;
+}
+.search-results [role="option"] > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.search-results [role="option"]:hover {
+  background: rgba(255, 255, 255, 0.42);
+}
+.search-results [aria-selected="true"] {
+  background: rgba(115, 188, 215, 0.14);
+}
+.search-status {
+  padding: 8px 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.search-attribution {
+  display: block;
+  padding: 8px 10px 2px;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.search-spinner {
+  color: var(--accent-strong);
+  animation: search-spin 1s linear infinite;
+}
+@keyframes search-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .search-spinner {
+    animation: none;
+  }
+}
+@media (max-width: 600px) {
+  .search .search-clear {
+    min-width: 36px;
+    min-height: 36px;
+  }
+}

@@ -5,6 +5,14 @@ export interface Coordinates {
 export interface LocationData extends Coordinates {
   name: string;
   country?: string;
+  city?: string;
+  region?: string;
+  countryCode?: string;
+}
+export interface LocationSearchResult extends LocationData {
+  id: string;
+  displayName: string;
+  contextLabel: string;
 }
 export interface CurrentWeather {
   isDay: boolean | null;

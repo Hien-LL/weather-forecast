@@ -24,7 +24,10 @@ export default function App() {
   const [selection, setSelection] = useState<Selection | null>(null);
   const sequence = useRef(0);
   const gps = useGeolocation();
-  const location = useLocationInfo(selection?.location ?? null);
+  const location = useLocationInfo(
+    selection?.location ?? null,
+    selection?.camera.mode !== "search",
+  );
   const { weather, loading, error, retry } = useWeather(
     location?.latitude,
     location?.longitude,
